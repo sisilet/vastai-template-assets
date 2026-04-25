@@ -6,7 +6,7 @@ set -euo pipefail
 #
 # Configure behavior with template environment variables:
 # - WORKFLOW_NAME                (exact workflow selector; installs only that workflow's assets)
-# - WORKFLOW_MODEL_PACK          (none|moody-zib-zit|ltx) broader fallback if WORKFLOW_NAME is unset
+# - WORKFLOW_MODEL_PACK          (none|moody-zib-zit|ltx|wan22) broader fallback if WORKFLOW_NAME is unset
 # - CUSTOM_MODEL_URL
 # - CUSTOM_MODEL_NAME
 # - CUSTOM_MODEL_SUBDIR            (default: diffusion_models)
@@ -16,8 +16,8 @@ set -euo pipefail
 # - CUSTOM_NODES_REF_<repo_name>   (optional git ref per repo)
 #
 # Example:
-# WORKFLOW_NAME=ltx23-gguf-t2v
-# WORKFLOW_MODEL_PACK=ltx
+# WORKFLOW_NAME=wan22-14b-t2v
+# WORKFLOW_MODEL_PACK=wan22
 # CUSTOM_MODEL_URL=https://example.com/my-model.safetensors
 # CUSTOM_MODEL_NAME=my-model.safetensors
 # CUSTOM_MODEL_SUBDIR=diffusion_models
@@ -121,9 +121,25 @@ upscale_models|https://huggingface.co/Lightricks/LTX-2.3/resolve/main/ltx-2.3-te
 audio_models/MelBandRoFormer_comfy|https://huggingface.co/Kijai/MelBandRoFormer_comfy/resolve/main/MelBandRoformer_fp16.safetensors
 EOF
       ;;
+    wan22)
+      cat <<'EOF'
+diffusion_models|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_t2v_high_noise_14B_fp8_scaled.safetensors
+diffusion_models|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors
+diffusion_models|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors
+diffusion_models|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors
+diffusion_models|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_ti2v_5B_fp16.safetensors
+loras|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_t2v_lightx2v_4steps_lora_v1.1_high_noise.safetensors
+loras|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_t2v_lightx2v_4steps_lora_v1.1_low_noise.safetensors
+loras|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors
+loras|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors
+text_encoders|https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors
+vae|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors
+vae|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan2.2_vae.safetensors
+EOF
+      ;;
     *)
       log "unsupported WORKFLOW_MODEL_PACK: ${pack}"
-      log "supported values: none, moody-zib-zit, ltx"
+      log "supported values: none, moody-zib-zit, ltx, wan22"
       exit 1
       ;;
   esac
@@ -142,6 +158,33 @@ text_encoders|https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/s
 vae|https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors
 loras|https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Edit-Lightning-4steps-V1.0-bf16.safetensors
 diffusion_models|https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_fp8_e4m3fn.safetensors
+EOF
+      ;;
+    wan22-14b-t2v)
+      cat <<'EOF'
+diffusion_models|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_t2v_high_noise_14B_fp8_scaled.safetensors
+diffusion_models|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors
+loras|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_t2v_lightx2v_4steps_lora_v1.1_high_noise.safetensors
+loras|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_t2v_lightx2v_4steps_lora_v1.1_low_noise.safetensors
+text_encoders|https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors
+vae|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors
+EOF
+      ;;
+    wan22-14b-i2v)
+      cat <<'EOF'
+diffusion_models|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors
+diffusion_models|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors
+loras|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors
+loras|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors
+text_encoders|https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors
+vae|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors
+EOF
+      ;;
+    wan22-5b-ti2v)
+      cat <<'EOF'
+diffusion_models|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_ti2v_5B_fp16.safetensors
+text_encoders|https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors
+vae|https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan2.2_vae.safetensors
 EOF
       ;;
     ltx23-gguf-t2v)
@@ -305,7 +348,7 @@ EOF
       ;;
     *)
       log "unsupported WORKFLOW_NAME: ${workflow}"
-      log "supported values: qwen-image-edit, ltx23-gguf-t2v, ltx23-gguf-i2v, ltx23-gguf-v2v, ltx23-audio-t2v, ltx23-audio-i2v, ltx23-ti2v, ltx23-ti2v-expert, ltx23-ti2v-expert-q6k, ltx2-s2v, ltxv2-frame-injection, ltx23-multi-transformer, ltx23-latent-workflows, ltx23-i2v-native, ltx23-i2v-gguf, ltx23-i2v-kijai"
+      log "supported values: qwen-image-edit, wan22-14b-t2v, wan22-14b-i2v, wan22-5b-ti2v, ltx23-gguf-t2v, ltx23-gguf-i2v, ltx23-gguf-v2v, ltx23-audio-t2v, ltx23-audio-i2v, ltx23-ti2v, ltx23-ti2v-expert, ltx23-ti2v-expert-q6k, ltx2-s2v, ltxv2-frame-injection, ltx23-multi-transformer, ltx23-latent-workflows, ltx23-i2v-native, ltx23-i2v-gguf, ltx23-i2v-kijai"
       exit 1
       ;;
   esac

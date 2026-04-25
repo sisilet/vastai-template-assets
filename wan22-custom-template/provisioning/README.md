@@ -9,6 +9,15 @@ Each script is standalone so you can point Vast at a single raw URL.
 - `qwen-image-edit.sh`
   - for `workflows/image_qwen_image_edit.json`
 
+## WAN
+
+- `wan/wan22-14b-t2v.sh`
+  - for `workflows/WAN/video_wan2_2_14B_t2v.json`
+- `wan/wan22-14b-i2v.sh`
+  - for `workflows/WAN/video_wan2_2_14B_i2v.json`
+- `wan/wan22-5b-ti2v.sh`
+  - for `workflows/WAN/video_wan2_2_5B_ti2v.json`
+
 ## LTX
 
 - `ltx/ltx23-gguf-t2v.sh`

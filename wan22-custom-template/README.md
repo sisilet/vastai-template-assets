@@ -56,6 +56,9 @@ If you want the smallest relevant download set, use `WORKFLOW_NAME`.
 Examples:
 
 - `WORKFLOW_NAME=qwen-image-edit`
+- `WORKFLOW_NAME=wan22-14b-t2v`
+- `WORKFLOW_NAME=wan22-14b-i2v`
+- `WORKFLOW_NAME=wan22-5b-ti2v`
 - `WORKFLOW_NAME=ltx23-gguf-t2v`
 - `WORKFLOW_NAME=ltx23-i2v-native`
 
@@ -67,6 +70,7 @@ The provisioning script can install one of two built-in workflow families:
 
 - `WORKFLOW_MODEL_PACK=moody-zib-zit`
 - `WORKFLOW_MODEL_PACK=ltx`
+- `WORKFLOW_MODEL_PACK=wan22`
 
 Or skip built-in packs entirely:
 

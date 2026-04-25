@@ -10,6 +10,9 @@ PROVISIONING_SCRIPT=https://example.com/provisioning_script.sh
 # This takes precedence over WORKFLOW_MODEL_PACK.
 # Supported values:
 # - qwen-image-edit
+# - wan22-14b-t2v
+# - wan22-14b-i2v
+# - wan22-5b-ti2v
 # - ltx23-gguf-t2v
 # - ltx23-gguf-i2v
 # - ltx23-gguf-v2v
@@ -28,7 +31,7 @@ PROVISIONING_SCRIPT=https://example.com/provisioning_script.sh
 # WORKFLOW_NAME=ltx23-gguf-t2v
 
 # Select a built-in workflow model pack.
-# Supported values: none, moody-zib-zit, ltx
+# Supported values: none, moody-zib-zit, ltx, wan22
 WORKFLOW_MODEL_PACK=none
 
 # Optional S3: leave unset if you want uploads only on selected requests.
@@ -48,6 +51,7 @@ WORKFLOW_MODEL_PACK=none
 
 # Optional selector notes:
 # - if WORKFLOW_NAME is set, only that workflow's resolved public assets are installed
+# - wan22 installs the resolved public dependencies for the official Wan 2.2 workflows
 # - moody-zib-zit installs the resolved public dependencies for the Moody/ZIB/ZIT workflows
 # - ltx installs the resolved public dependencies for the LTX workflows
 # - unresolved/private/community-only files are still not installed automatically
