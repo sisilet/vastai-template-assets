@@ -1,0 +1,72 @@
+# Template environment variables for a custom ComfyUI Wan 2.2 serverless template.
+#
+# Put these into the Vast template editor or account-level environment variables
+# as appropriate.
+
+# Required to run your custom setup script from a public raw URL.
+PROVISIONING_SCRIPT=https://example.com/provisioning_script.sh
+
+# Select an exact workflow. When set, only that workflow's assets are installed.
+# This takes precedence over WORKFLOW_MODEL_PACK.
+# Supported values:
+# - qwen-image-edit
+# - ltx23-gguf-t2v
+# - ltx23-gguf-i2v
+# - ltx23-gguf-v2v
+# - ltx23-audio-t2v
+# - ltx23-audio-i2v
+# - ltx23-ti2v
+# - ltx23-ti2v-expert
+# - ltx23-ti2v-expert-q6k
+# - ltx2-s2v
+# - ltxv2-frame-injection
+# - ltx23-multi-transformer
+# - ltx23-latent-workflows
+# - ltx23-i2v-native
+# - ltx23-i2v-gguf
+# - ltx23-i2v-kijai
+# WORKFLOW_NAME=ltx23-gguf-t2v
+
+# Select a built-in workflow model pack.
+# Supported values: none, moody-zib-zit, ltx
+WORKFLOW_MODEL_PACK=none
+
+# Optional S3: leave unset if you want uploads only on selected requests.
+# If you set these at the account level, every request can use them by default.
+# S3_ACCESS_KEY_ID=
+# S3_SECRET_ACCESS_KEY=
+# S3_BUCKET_NAME=
+# S3_ENDPOINT_URL=
+# S3_REGION=
+
+# Optional webhook.
+# WEBHOOK_URL=
+
+# Optional: override the pyworker source.
+# PYWORKER_REPO=https://github.com/vast-ai/pyworker
+# PYWORKER_REF=main
+
+# Optional selector notes:
+# - if WORKFLOW_NAME is set, only that workflow's resolved public assets are installed
+# - moody-zib-zit installs the resolved public dependencies for the Moody/ZIB/ZIT workflows
+# - ltx installs the resolved public dependencies for the LTX workflows
+# - unresolved/private/community-only files are still not installed automatically
+
+# Additional custom model installation.
+CUSTOM_MODEL_URL=https://example.com/path/to/your-model.safetensors
+CUSTOM_MODEL_NAME=your-model.safetensors
+CUSTOM_MODEL_SUBDIR=diffusion_models
+
+# Extra model URLs for the same subdir as CUSTOM_MODEL_SUBDIR.
+# CUSTOM_MODEL_EXTRA_URLS="https://example.com/path/to/another-model.safetensors"
+
+# Extra model specs with explicit target subdir.
+# Format: subdir|url, space-separated.
+# CUSTOM_MODEL_EXTRA_SPECS="loras|https://example.com/loras/foo.safetensors vae|https://example.com/vae/bar.safetensors text_encoders|https://example.com/encoders/baz.safetensors"
+
+# Custom node repos, space-separated.
+# CUSTOM_NODE_REPOS="https://github.com/ltdrdata/ComfyUI-Manager.git https://github.com/your-org/your-node.git"
+
+# Optional pinned refs. Repo name becomes the variable suffix.
+# Example for https://github.com/ltdrdata/ComfyUI-Manager.git
+# CUSTOM_NODES_REF_ComfyUI_Manager=v2.50.1
