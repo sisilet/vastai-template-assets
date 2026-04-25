@@ -1,0 +1,15 @@
+{
+  "input": {
+    "request_id": "",
+    "workflow_json": {
+      "$ref_note": "Copy the contents of video_wan2_2_5B_ti2v.serverless.json here, or load that file in your client script. Replace the placeholder image URL if you want image-conditioned generation."
+    },
+    "s3": {
+      "access_key_id": "",
+      "secret_access_key": "",
+      "endpoint_url": "",
+      "bucket_name": "",
+      "region": ""
+    }
+  }
+}

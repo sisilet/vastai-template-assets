@@ -1,0 +1,15 @@
+{
+  "input": {
+    "request_id": "",
+    "workflow_json": {
+      "$ref_note": "Copy the contents of video_wan2_2_14B_i2v.serverless.json here, or load that file in your client script. Replace the placeholder image URL before sending."
+    },
+    "s3": {
+      "access_key_id": "",
+      "secret_access_key": "",
+      "endpoint_url": "",
+      "bucket_name": "",
+      "region": ""
+    }
+  }
+}
