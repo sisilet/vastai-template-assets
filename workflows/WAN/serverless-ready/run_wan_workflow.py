@@ -23,8 +23,46 @@ def maybe_s3_from_args(args):
     }
 
 
-async def run(endpoint_name: str, workflow_path: Path, s3: dict | None):
+def apply_overrides(workflow: dict, prompt: str | None, image_url: str | None, output_prefix: str | None):
+    for node in workflow.get("nodes", []):
+        if prompt and node.get("title") == "CLIP Text Encode (Positive Prompt)":
+            widgets = node.get("widgets_values") or []
+            if widgets:
+                widgets[0] = prompt
+
+        if image_url and node.get("type") == "LoadImage":
+            widgets = node.get("widgets_values") or []
+            if widgets:
+                widgets[0] = image_url
+
+        if output_prefix and node.get("type") == "SaveVideo":
+            widgets = node.get("widgets_values") or []
+            if widgets:
+                widgets[0] = output_prefix
+
+    for subgraph in workflow.get("definitions", {}).get("subgraphs", []):
+        for node in subgraph.get("nodes", []):
+            if prompt and node.get("title") == "CLIP Text Encode (Positive Prompt)":
+                widgets = node.get("widgets_values") or []
+                if widgets:
+                    widgets[0] = prompt
+
+            if image_url and node.get("type") == "LoadImage":
+                widgets = node.get("widgets_values") or []
+                if widgets:
+                    widgets[0] = image_url
+
+            if output_prefix and node.get("type") == "SaveVideo":
+                widgets = node.get("widgets_values") or []
+                if widgets:
+                    widgets[0] = output_prefix
+
+    return workflow
+
+
+async def run(endpoint_name: str, workflow_path: Path, s3: dict | None, prompt: str | None, image_url: str | None, output_prefix: str | None):
     workflow = load_json(workflow_path)
+    workflow = apply_overrides(workflow, prompt, image_url, output_prefix)
 
     payload = {
         "input": {
@@ -46,6 +84,9 @@ def main():
     parser = argparse.ArgumentParser(description="Run a WAN workflow against a Vast serverless endpoint.")
     parser.add_argument("--endpoint", required=True, help="Vast serverless endpoint name")
     parser.add_argument("--workflow", required=True, help="Path to workflow JSON")
+    parser.add_argument("--prompt", help="Replacement positive prompt for the workflow")
+    parser.add_argument("--image-url", help="Replacement image URL for I2V/TI2V workflows")
+    parser.add_argument("--output-prefix", help="Replacement SaveVideo prefix")
     parser.add_argument("--s3-access-key-id")
     parser.add_argument("--s3-secret-access-key")
     parser.add_argument("--s3-endpoint-url")
@@ -53,7 +94,16 @@ def main():
     parser.add_argument("--s3-region")
     args = parser.parse_args()
 
-    asyncio.run(run(args.endpoint, Path(args.workflow), maybe_s3_from_args(args)))
+    asyncio.run(
+        run(
+            args.endpoint,
+            Path(args.workflow),
+            maybe_s3_from_args(args),
+            args.prompt,
+            args.image_url,
+            args.output_prefix,
+        )
+    )
 
 
 if __name__ == "__main__":
