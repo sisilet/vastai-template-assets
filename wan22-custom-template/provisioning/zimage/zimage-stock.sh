@@ -21,6 +21,16 @@ PY
   "$PYTHON_BIN" -m pip install opencv-python-headless
 }
 
+ensure_python_packages() {
+  log "installing ZIMAGE support python packages"
+  "$PYTHON_BIN" -m pip install \
+    opencv-python-headless \
+    scikit-image \
+    ultralytics \
+    piexif \
+    dill
+}
+
 download() {
   local subdir="$1"
   local url="$2"
@@ -35,6 +45,6 @@ download "text_encoders" "https://huggingface.co/Comfy-Org/z_image_turbo/resolve
 download "vae" "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/vae/ae.safetensors"
 download "diffusion_models" "https://huggingface.co/Comfy-Org/z_image/resolve/main/split_files/diffusion_models/z_image_bf16.safetensors"
 download "diffusion_models" "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors"
-ensure_cv2
+ensure_python_packages
 
 log "zimage-stock provisioning complete"
